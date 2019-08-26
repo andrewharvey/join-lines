@@ -30,11 +30,24 @@ function joinLines(input, options) {
     // create an KDBush index of start-end points for each LineString
     const startEndPointIndex = new KDBush(startEndPoints);
 
-    // a list of joins we need to fulfill
+    // a list of join instructions we need to fulfill
+    // a join instruction has a key "matchKey" which is a 0 (start of line) or
+    // 1 (end of line) concatenated with the index of the line we are joining from.
+    // The value is an object consisting of fromLine (index of from), toLine (index of to),
+    // fromStart (a boolean, true is start of the line, false is end of the line) and
+    // toStart (as fromStart).
+    //
+    // For example join instructions could look like:
+    // {
+    //   '00': { fromLine: 0, fromStart: false, toLine: 1, toStart: true },
+    //   '11': true
+    // }
+    //
+    // The 00 key means this join is the start of the line 0.
+    // The 11 key means this join is the end of line 1.
+    // The value of 00, means join from line 0 to line 1, specifically the end of line 0 to the start of line 1
+    // The value of 11, is just a placeholder to mark that we don't need this instruction (in this case it's redundant).
     const joinInstructions = {};
-
-    // a list of input index's for line's not joined
-    const notJoined = {};
 
     // for each start-end point find all other start-end points within the tolerance and log a join instruction
     startEndPoints.forEach((startEndPoint, fromIndex) => {
@@ -52,8 +65,6 @@ function joinLines(input, options) {
                 const fromStart = (fromIndex % 2) === 0; // boolean is it start point or not
                 const toLine = Math.floor(toIndex / 2);
                 const toStart = (toIndex % 2) === 0; // boolean is it start point or not
-
-                console.log({ fromLine, from: fromStart ? 'start': 'end', toLine, to: toStart ? 'start': 'end'});
 
                 // since a start-end can only be involved in one join, we keep track and skip any
                 // joins which would break this promise
@@ -89,8 +100,6 @@ function joinLines(input, options) {
         });
     });
 
-    console.log(joinInstructions);
-
     // when a join is made, keep track of which original segments have been
     // joined so that future join instructions can be processed
     const joinLog = {};
@@ -102,8 +111,6 @@ function joinLines(input, options) {
     Object.values(joinInstructions).forEach((instruction) => {
         if (typeof instruction === 'object') { // skip any boolean entries as which were marked as duplicates previously
             if (!instruction.fromStart && instruction.toStart) { // end to start, no need to swap directions
-                console.log('   instruction: ', {fromLine: instruction.fromLine, from: instruction.fromStart ? 'start' : 'end', toLine: instruction.toLine, to: instruction.toStart ? 'start' : 'end'});
-
                 // keep track if this join is joining new segments or segments already joined
                 let replaceOutputIndex = null;
 
@@ -146,8 +153,6 @@ function joinLines(input, options) {
                 if (!(instruction.toLine in joinLog)) {
                     joinLog[instruction.toLine] = outputLineIndex;
                 }
-
-                console.log('      joinLog: ', joinLog);
             }
         }
     });
