@@ -82,7 +82,7 @@ function joinLines(input, options) {
 
                 if (!joinInstructions[matchKeyFrom] && !joinInstructions[matchKeyTo]) {
 
-                    if ((('1' + toLine) in joinInstructions) || (('0' + toLine) in joinInstructions)) {
+                    if (((`1${toLine}`) in joinInstructions) || ((`0${toLine}`) in joinInstructions)) {
                         // skip joining back to self in a loop
                     } else {
                         joinInstructions[matchKeyFrom] = {
@@ -139,7 +139,7 @@ function joinLines(input, options) {
                 let outputLineIndex;
                 if (replaceOutputIndex !== null) {
                     outputLineIndex = replaceOutputIndex;
-                    outputLines[replaceOutputIndex] = outputLine
+                    outputLines[replaceOutputIndex] = outputLine;
                 } else {
                     outputLineIndex = outputLines.length;
                     outputLines.push(outputLine);
