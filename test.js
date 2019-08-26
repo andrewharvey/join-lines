@@ -170,3 +170,84 @@ test('three way join', (t) => {
     ]);
     t.end();
 });
+
+// |-->|
+// |<--|
+//
+// |----
+//  <---
+test('two line circle', (t) => {
+    const result = joinLines([
+        [[0, 1], [1, 1], [1, 0]],
+        [[1, 0], [0, 0], [0, 1]]
+    ], {
+        preserveDirections: true
+    });
+    t.same(result, [
+        [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
+    ]);
+    t.end();
+});
+
+// |-->|
+// |   |
+// |<--|
+//
+// |----
+// ^   .
+//  ----
+test('four line circle', (t) => {
+    const result = joinLines([
+        [[0, 1], [1, 1]],
+        [[1, 1], [1, 0]],
+        [[1, 0], [0, 0]],
+        [[0, 0], [0, 1]]
+    ], {
+        preserveDirections: true
+    });
+    t.same(result, [
+        [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
+    ]);
+    t.end();
+});
+
+// |-->|
+// |<--|<--|
+//
+// |----
+//  <---|<--|
+test('two line circle with extra line', (t) => {
+    const result = joinLines([
+        [[0, 1], [1, 1], [1, 0]],
+        [[1, 0], [0, 0], [0, 1]],
+        [[2, 0], [1, 0]]
+    ], {
+        preserveDirections: true
+    });
+    t.same(result, [
+        [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]],
+        [[2, 0], [1, 0]]
+    ]);
+    t.end();
+});
+
+// |-->|-->|
+//     |<--|<--|
+//
+// |----
+//  <---|<--|
+test('two line circle with extra lines', (t) => {
+    const result = joinLines([
+        [[-1, 1], [0, 1]],
+        [[0, 1], [1, 1], [1, 0]],
+        [[1, 0], [0, 0], [0, 1]],
+        [[2, 0], [1, 0]]
+    ], {
+        preserveDirections: true
+    });
+    t.same(result, [
+        [[-1, 1], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1]],
+        [[2, 0], [1, 0]]
+    ]);
+    t.end();
+});

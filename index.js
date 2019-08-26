@@ -70,19 +70,26 @@ function joinLines(input, options) {
                 const matchKeyTo = (toStart ? '1' : '0') + toLine;
 
                 if (!joinInstructions[matchKeyFrom] && !joinInstructions[matchKeyTo]) {
-                    joinInstructions[matchKeyFrom] = {
-                        fromLine,
-                        fromStart,
-                        toLine,
-                        toStart
-                    };
 
-                    // still mark this as being involved in a join to prevent it being used again
-                    joinInstructions[matchKeyTo] = true;
+                    if ((('1' + toLine) in joinInstructions) || (('0' + toLine) in joinInstructions)) {
+                        // skip joining back to self in a loop
+                    } else {
+                        joinInstructions[matchKeyFrom] = {
+                            fromLine,
+                            fromStart,
+                            toLine,
+                            toStart
+                        };
+
+                        // still mark this as being involved in a join to prevent it being used again
+                        joinInstructions[matchKeyTo] = true;
+                    }
                 }
             }
         });
     });
+
+    console.log(joinInstructions);
 
     // when a join is made, keep track of which original segments have been
     // joined so that future join instructions can be processed
@@ -99,7 +106,6 @@ function joinLines(input, options) {
 
                 // keep track if this join is joining new segments or segments already joined
                 let replaceOutputIndex = null;
-
 
                 inputsJoined[instruction.fromLine] = true;
                 inputsJoined[instruction.toLine] = true;
