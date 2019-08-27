@@ -3,6 +3,12 @@
 const joinLines = require('./');
 const test = require('tape');
 
+test('empty array input', (t) => {
+    const result = joinLines([]);
+    t.same(result, []);
+    t.end();
+});
+
 // |-->|-->|
 // |------>|
 test('join two ordered touching lines', (t) => {
