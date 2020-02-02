@@ -6,7 +6,7 @@ module.exports = joinLines;
 module.exports.default = joinLines;
 
 /**
- * Given an array of LineString's, will find all that touch at endpoints and join them together.
+ * Given an array of GeoJSON LineString's, will find all that touch at endpoints and join them together.
  *
  * @param {Array} input An array of GeoJSON LineString coordinates
  * @param {Object} [options]
