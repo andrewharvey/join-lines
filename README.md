@@ -5,13 +5,7 @@ Join GeoJSON LineStrings together.
 ## Usage
 
 ```js
-const joinLines = require('join-lines');
-```
-
-or
-
-```js
-import joinLines from 'join-lines');
+import joinLines from 'join-lines'
 ```
 
 Given an array of GeoJSON LineString's, will find all that touch at endpoints and join them together.
