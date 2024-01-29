@@ -5,20 +5,27 @@
   "main": "index.js",
   "author": "Andrew Harvey",
   "license": "ISC",
+  "type": "module",
   "scripts": {
     "test": "eslint index.js test.js && tape test.js",
     "docs": "documentation build index.js --format=md > API.md"
   },
   "dependencies": {
-    "kdbush": "^3.0.0"
+    "kdbush": "^4.0.2"
   },
   "devDependencies": {
-    "documentation": "^12.1.4",
-    "eslint": "^6.2.2",
+    "documentation": "^14.0.2",
+    "eslint": "^8.56.0",
     "eslint-config-mourner": "^3.0.0",
-    "tape": "^4.11.0"
+    "tape": "^5.7.4"
   },
   "eslintConfig": {
-    "extends": "mourner"
+    "extends": "mourner",
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ]
+    }
   }
 }
