@@ -33,7 +33,7 @@ function joinLines(input, options) {
 
   startEndPointIndex.finish();
 
-  // a list of join instructions we need to fulfill
+  // a list of join instructions we need to fulfil
   // a join instruction has a key "matchKey" which is a 0 (start of line) or
   // 1 (end of line) concatenated with the index of the line we are joining from.
   // The value is an object consisting of fromLine (index of from), toLine (index of to),
@@ -72,10 +72,11 @@ function joinLines(input, options) {
         // since a start-end can only be involved in one join, we keep track and skip any
         // joins which would break this promise
 
+        // if requested to preserve line direction
         if (options && options.preserveDirections) {
-          if (!fromStart && toStart) { // end to start
+          if (!fromStart && toStart) { // end to start is the only allowed match
           } else {
-            // skip all others as they wouldn't preseve the line directions
+            // skip all others as they wouldn't preserve the line directions
             return;
           }
         }
@@ -113,7 +114,10 @@ function joinLines(input, options) {
 
   Object.values(joinInstructions).forEach((instruction) => {
     if (typeof instruction === 'object') { // skip any boolean entries as which were marked as duplicates previously
-      if (!instruction.fromStart && instruction.toStart) { // end to start, no need to swap directions
+      if (
+        (!instruction.fromStart && instruction.toStart) || // end to start
+        (instruction.fromStart && !instruction.toStart) // start to end
+      ) { // no need to swap directions
         // keep track if this join is joining new segments or segments already joined
         let replaceOutputIndex = null;
 
@@ -137,7 +141,7 @@ function joinLines(input, options) {
           to = input[instruction.toLine];
         }
 
-        const outputLine = from.concat(to.slice(1));
+        const outputLine = (!instruction.fromStart && instruction.toStart) ? from.concat(to.slice(1)) : to.concat(from.slice(1));
 
         let outputLineIndex;
         if (replaceOutputIndex !== null) {

@@ -40,6 +40,84 @@ test('join two ordered touching lines with tolerance', (t) => {
   t.end();
 });
 
+//     |-->|
+// |-->|
+// |------>|
+test('join two touching lines start to end', (t) => {
+  const result = joinLines(
+    [
+      [
+        [1, 0],
+        [2, 0]
+      ],
+      [
+        [0, 0],
+        [1, 0]
+      ],
+    ]
+  );
+  t.same(result, [
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0]
+    ]
+  ]);
+  t.end();
+});
+
+//     |-->|
+// |<--|
+// |------>|
+test('join two touching lines start to end opposite directions', (t) => {
+  const result = joinLines(
+    [
+      [
+        [1, 0],
+        [2, 0]
+      ],
+      [
+        [1, 0],
+        [0, 0]
+      ],
+    ]
+  );
+  t.same(result, [
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0]
+    ]
+  ]);
+  t.end();
+});
+
+//     |<--|
+// |-->|
+// |------>|
+test('join two touching lines start to end opposite directions', (t) => {
+  const result = joinLines(
+    [
+      [
+        [2, 0],
+        [1, 0]
+      ],
+      [
+        [0, 0],
+        [1, 0]
+      ],
+    ]
+  );
+  t.same(result, [
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0]
+    ]
+  ]);
+  t.end();
+});
+
 // |-->|-->|-->|
 // |---------->|
 test('join three ordered touching lines', (t) => {
@@ -99,6 +177,23 @@ test('no joins', (t) => {
     [[2, 0], [3, 0]]
   ], {
     preserveDirections: true
+  });
+  t.same(result, [
+    [[0, 0], [1, 0]],
+    [[2, 0], [3, 0]]
+  ]);
+  t.end();
+});
+
+// |-->| |-->|
+// |-->| |-->|
+test('no joins as outside tolerance', (t) => {
+  const result = joinLines([
+    [[0, 0], [1, 0]],
+    [[2, 0], [3, 0]]
+  ], {
+    preserveDirections: true,
+    tolerance: 0.5
   });
   t.same(result, [
     [[0, 0], [1, 0]],
