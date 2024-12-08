@@ -10,7 +10,7 @@ test('empty array input', (t) => {
 });
 
 // |-->|-->|
-// |------>|
+// |---.-->|
 test('join two ordered touching lines', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -25,7 +25,7 @@ test('join two ordered touching lines', (t) => {
 });
 
 // |-->||-->|
-// |------->|
+// |---.--->|
 test('join two ordered touching lines with tolerance', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -42,7 +42,7 @@ test('join two ordered touching lines with tolerance', (t) => {
 
 //     |-->|
 // |-->|
-// |------>|
+// |---.-->|
 test('join two touching lines start to end', (t) => {
   const result = joinLines(
     [
@@ -68,7 +68,7 @@ test('join two touching lines start to end', (t) => {
 
 //     |-->|
 // |<--|
-// |------>|
+// |---.-->|
 test('join two touching lines start to end opposite directions', (t) => {
   const result = joinLines(
     [
@@ -94,7 +94,7 @@ test('join two touching lines start to end opposite directions', (t) => {
 
 //     |<--|
 // |-->|
-// |------>|
+// |---.-->|
 test('join two touching lines start to end opposite directions', (t) => {
   const result = joinLines(
     [
@@ -119,7 +119,7 @@ test('join two touching lines start to end opposite directions', (t) => {
 });
 
 // |-->|-->|-->|
-// |---------->|
+// |---.---.-->|
 test('join three ordered touching lines', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -135,7 +135,7 @@ test('join three ordered touching lines', (t) => {
 });
 
 // |-->|-->|-->|-->|
-// |-------------->|
+// |---.---.---.-->|
 test('join four ordered touching lines', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -152,7 +152,7 @@ test('join four ordered touching lines', (t) => {
 });
 
 // |-->|-->||-->|-->|
-// |--------------->|
+// |---.---.----.-->|
 test('join four ordered touching lines with tolerance', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -203,7 +203,7 @@ test('no joins as outside tolerance', (t) => {
 });
 
 // |-->|-->| |-->|
-// |------>| |-->|
+// |---.-->| |-->|
 test('two lines joined, one not', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -236,7 +236,7 @@ test('two lines opposite directions not joined with preserveDirections', (t) => 
 });
 
 // |-->|-->|<--|
-// |------>|<--|
+// |---.-->|<--|
 test('two lines in same direction joined, one opposite direction not joined with preserveDirections', (t) => {
   const result = joinLines([
     [[0, 0], [1, 0]],
@@ -255,7 +255,7 @@ test('two lines in same direction joined, one opposite direction not joined with
 // |-->|-->|
 // |-->/
 //
-// |------>|
+// |---.-->|
 // |-->/
 test('three way join', (t) => {
   const result = joinLines([
@@ -275,8 +275,8 @@ test('three way join', (t) => {
 // |-->|
 // |<--|
 //
-// |----
-//  <---
+// |---\
+//  <--.
 test('two line circle', (t) => {
   const result = joinLines([
     [[0, 1], [1, 1], [1, 0]],
@@ -315,8 +315,8 @@ test('four line circle', (t) => {
 // |-->|
 // |<--|<--|
 //
-// |----
-//  <---|<--|
+// |---\
+//  <--.|<--|
 test('two line circle with extra line', (t) => {
   const result = joinLines([
     [[0, 1], [1, 1], [1, 0]],
@@ -335,8 +335,8 @@ test('two line circle with extra line', (t) => {
 // |-->|-->|
 //     |<--|<--|
 //
-// |----
-//  <---|<--|
+// |---.---\
+//     <---|<--|
 test('two line circle with extra lines', (t) => {
   const result = joinLines([
     [[-1, 1], [0, 1]],
