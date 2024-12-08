@@ -352,3 +352,21 @@ test('two line circle with extra lines', (t) => {
   ]);
   t.end();
 });
+//
+// |-->|-->|
+//     |-->|-->|
+//
+// |---.---.---|
+//
+test('overlapping segments', (t) => {
+  const result = joinLines([
+    [[0, 0], [1, 0], [2, 0]],
+    [[1, 0], [2, 0], [3, 0]]
+  ], {
+    preserveDirections: false
+  });
+  t.same(result, [
+    [[0, 0], [1, 0], [2, 0], [3, 0]]
+  ]);
+  t.end();
+});
