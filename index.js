@@ -11,7 +11,7 @@ import KDBush from 'kdbush';
  * @param {Object} [options.tolerance=0] Tolerance allowed to still join endpoints which are close but not exactly touching.
  * @return {Array} An array of joined LineString coordinates.
  */
-function joinLines(input, options) {
+export default function (input, options) {
   const tolerance = options && options.tolerance || 0;
 
   // startEndPoints is a flat array of line 1 start, line 1 end, line 2 start, line 2 end, etc.
@@ -175,5 +175,3 @@ function joinLines(input, options) {
 
   return outputLines;
 }
-
-export default joinLines;
